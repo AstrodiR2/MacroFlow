@@ -3,10 +3,12 @@
 
 BotUI* BotUI::create() {
     auto ret = new BotUI();
+
     if (ret->initAnchored(280, 200, "GJ_square01.png")) {
         ret->autorelease();
         return ret;
     }
+
     delete ret;
     return nullptr;
 }
@@ -31,37 +33,47 @@ bool BotUI::setup() {
     m_mainLayer->addChild(menu);
 
     auto recordBtn = CCMenuItemSpriteExtra::create(
-        ButtonSprite::create("Record", "bigFont.fnt", "GJ_button_01.png"),
-        this, menu_selector(BotUI::onRecord)
+        ButtonSprite::create("Record"),
+        this,
+        menu_selector(BotUI::onRecord)
     );
+
     recordBtn->setPosition({70, 100});
     menu->addChild(recordBtn);
 
     auto playBtn = CCMenuItemSpriteExtra::create(
-        ButtonSprite::create("Play", "bigFont.fnt", "GJ_button_02.png"),
-        this, menu_selector(BotUI::onPlay)
+        ButtonSprite::create("Play"),
+        this,
+        menu_selector(BotUI::onPlay)
     );
+
     playBtn->setPosition({140, 100});
     menu->addChild(playBtn);
 
     auto stopBtn = CCMenuItemSpriteExtra::create(
-        ButtonSprite::create("Stop", "bigFont.fnt", "GJ_button_06.png"),
-        this, menu_selector(BotUI::onStop)
+        ButtonSprite::create("Stop"),
+        this,
+        menu_selector(BotUI::onStop)
     );
+
     stopBtn->setPosition({210, 100});
     menu->addChild(stopBtn);
 
     auto saveBtn = CCMenuItemSpriteExtra::create(
-        ButtonSprite::create("Save", "bigFont.fnt", "GJ_button_04.png"),
-        this, menu_selector(BotUI::onSave)
+        ButtonSprite::create("Save"),
+        this,
+        menu_selector(BotUI::onSave)
     );
+
     saveBtn->setPosition({100, 55});
     menu->addChild(saveBtn);
 
     auto loadBtn = CCMenuItemSpriteExtra::create(
-        ButtonSprite::create("Load", "bigFont.fnt", "GJ_button_04.png"),
-        this, menu_selector(BotUI::onLoad)
+        ButtonSprite::create("Load"),
+        this,
+        menu_selector(BotUI::onLoad)
     );
+
     loadBtn->setPosition({180, 55});
     menu->addChild(loadBtn);
 
@@ -70,11 +82,21 @@ bool BotUI::setup() {
 
 void BotUI::updateLabels() {
     auto& rs = ReplaySystem::get();
+
     switch (rs.getState()) {
-        case BotState::Idle:      m_statusLabel->setString("Idle"); break;
-        case BotState::Recording: m_statusLabel->setString("Recording..."); break;
-        case BotState::Playing:   m_statusLabel->setString("Playing..."); break;
+        case BotState::Idle:
+            m_statusLabel->setString("Idle");
+            break;
+
+        case BotState::Recording:
+            m_statusLabel->setString("Recording...");
+            break;
+
+        case BotState::Playing:
+            m_statusLabel->setString("Playing...");
+            break;
     }
+
     auto frameStr = fmt::format("Frames: {}", rs.getCurrentFrame());
     m_frameLabel->setString(frameStr.c_str());
 }
@@ -82,13 +104,13 @@ void BotUI::updateLabels() {
 void BotUI::onRecord(CCObject*) {
     ReplaySystem::get().startRecording();
     updateLabels();
-    onClose(nullptr);
+    removeFromParentAndCleanup(true);
 }
 
 void BotUI::onPlay(CCObject*) {
     ReplaySystem::get().startPlaying();
     updateLabels();
-    onClose(nullptr);
+    removeFromParentAndCleanup(true);
 }
 
 void BotUI::onStop(CCObject*) {
@@ -99,11 +121,22 @@ void BotUI::onStop(CCObject*) {
 
 void BotUI::onSave(CCObject*) {
     ReplaySystem::get().saveReplay("macro");
-    FLAlertLayer::create("MacroFlow", "Macro saved!", "OK")->show();
+
+    FLAlertLayer::create(
+        "MacroFlow",
+        "Macro saved!",
+        "OK"
+    )->show();
 }
 
 void BotUI::onLoad(CCObject*) {
     ReplaySystem::get().loadReplay("macro");
+
     updateLabels();
-    FLAlertLayer::create("MacroFlow", "Macro loaded!", "OK")->show();
+
+    FLAlertLayer::create(
+        "MacroFlow",
+        "Macro loaded!",
+        "OK"
+    )->show();
 }

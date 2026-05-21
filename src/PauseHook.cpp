@@ -8,9 +8,12 @@ class $modify(MFPauseLayer, PauseLayer) {
     void customSetup() {
         PauseLayer::customSetup();
 
+        auto sprite = ButtonSprite::create("MacroFlow");
+
         auto btn = CCMenuItemSpriteExtra::create(
-            ButtonSprite::create("MacroFlow", "bigFont.fnt", "GJ_button_01.png"),
-            this, menu_selector(MFPauseLayer::onMacroFlow)
+            sprite,
+            this,
+            menu_selector(MFPauseLayer::onMacroFlow)
         );
 
         auto menu = CCMenu::create();
@@ -19,6 +22,7 @@ class $modify(MFPauseLayer, PauseLayer) {
         addChild(menu);
 
         auto winSize = CCDirector::get()->getWinSize();
+
         btn->setPosition({winSize.width / 2, 50});
         btn->setScale(0.7f);
     }
