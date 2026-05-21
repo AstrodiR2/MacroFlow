@@ -16,4 +16,10 @@ jobs:
       - name: Build mod
         uses: geode-sdk/build-geode-mod@main
         with:
-          platform: android64
+          target: android64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MacroFlow-android64
+          path: build/*.geode
