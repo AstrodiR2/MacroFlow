@@ -14,7 +14,7 @@ BotUI* BotUI::create() {
 }
 
 bool BotUI::init() {
-    if (!FLAlertLayer::init(nullptr, "MacroFlow", "", 280, 200))
+    if (!FLAlertLayer::init(nullptr, "MacroFlow", "", "OK", nullptr, 280, false, 200, 1.0f))
         return false;
 
     auto winSize = CCDirector::get()->getWinSize();
