@@ -1,0 +1,11 @@
+{
+  "geode": "v5.6.1",
+  "gd": {
+    "android": "2.2801"
+  },
+  "id": "astrodir2.macroflow",
+  "name": "MacroFlow",
+  "version": "v1.0.0",
+  "developer": "AstrodiR2",
+  "description": "Simple and clean replay bot for Geometry Dash"
+}
