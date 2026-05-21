@@ -1,13 +1,18 @@
 #pragma once
 
 #include <Geode/Geode.hpp>
-#include <Geode/ui/Popup.hpp>
 
 using namespace geode::prelude;
 
-class BotUI : public geode::Popup<> {
+class BotUI : public FLAlertLayer {
 protected:
-    bool setup() override;
+    CCLabelBMFont* m_statusLabel = nullptr;
+    CCLabelBMFont* m_frameLabel = nullptr;
+
+public:
+    static BotUI* create();
+
+    bool init();
 
     void onRecord(CCObject*);
     void onPlay(CCObject*);
@@ -16,10 +21,4 @@ protected:
     void onLoad(CCObject*);
 
     void updateLabels();
-
-    CCLabelBMFont* m_statusLabel = nullptr;
-    CCLabelBMFont* m_frameLabel = nullptr;
-
-public:
-    static BotUI* create();
 };

@@ -28,6 +28,6 @@ class $modify(MFPauseLayer, PauseLayer) {
     }
 
     void onMacroFlow(CCObject*) {
-        BotUI::create()->show();
+        auto ui = BotUI::create(); CCDirector::get()->getRunningScene()->addChild(ui, 999);
     }
 };

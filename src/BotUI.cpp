@@ -4,7 +4,7 @@
 BotUI* BotUI::create() {
     auto ret = new BotUI();
 
-    if (ret->initAnchored(280, 200, "GJ_square01.png")) {
+    if (ret && ret->init()) {
         ret->autorelease();
         return ret;
     }
@@ -13,10 +13,11 @@ BotUI* BotUI::create() {
     return nullptr;
 }
 
-bool BotUI::setup() {
-    setTitle("MacroFlow");
+bool BotUI::init() {
+    if (!FLAlertLayer::init(nullptr, "MacroFlow", "", 280, 200))
+        return false;
 
-    auto& rs = ReplaySystem::get();
+    auto winSize = CCDirector::get()->getWinSize();
 
     m_statusLabel = CCLabelBMFont::create("Idle", "bigFont.fnt");
     m_statusLabel->setScale(0.5f);
@@ -76,6 +77,11 @@ bool BotUI::setup() {
 
     loadBtn->setPosition({180, 55});
     menu->addChild(loadBtn);
+
+    setPosition({
+        (winSize.width - 280) / 2,
+        (winSize.height - 200) / 2
+    });
 
     return true;
 }
